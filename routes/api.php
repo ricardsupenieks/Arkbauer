@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CartController;
+use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\StockController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::get('/products', [ProductController::class, 'index']);
+//Route::post('/products', [ProductController::class, 'store']);
+//Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+//Route::put('/products/{product}', [ProductController::class, 'update']);
+//Route::get('/products/{product}', [ProductController::class, 'show']);
+
+Route::apiResource('products', ProductController::class);
+
+Route::get('/stock', [StockController::class, 'index']);
+Route::post('/stock', [StockController::class, 'store']);
+Route::delete('/stock/{product}', [StockController::class, 'destroy']);
+Route::put('/stock/{product}', [StockController::class, 'update']);
+Route::get('/stock/{product}', [StockController::class, 'show']);
+
+Route::get('/cart', [CartController::class, 'index']);
+Route::post('/cart', [CartController::class, 'store']);
+Route::delete('/cart/{product}', [CartController::class, 'destroy']);
+Route::put('/cart/{product}', [CartController::class, 'update']);
+Route::get('/cart/{product}', [CartController::class, 'show']);

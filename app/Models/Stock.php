@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Stock extends Model implements StockInterface
+class Stock implements StockInterface // extends Model
 {
     use HasFactory;
 
     private array $products = [];
+
+//    protected $fillable = [
+//        'product_id'
+//    ];
 
     public function addProduct(ProductInterface $product): self
     {
@@ -30,4 +35,10 @@ class Stock extends Model implements StockInterface
     {
         return $this->products;
     }
+
+
+//    public function products(): HasMany
+//    {
+//        return $this->hasMany(Product::class);
+//    }
 }

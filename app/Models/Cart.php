@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Cart extends Model implements CartInterface
+class Cart implements CartInterface // extends Model
 {
     use HasFactory;
+
+//    protected $fillable = [
+//        'product_id'
+//    ];
 
     private array $products = [];
 
@@ -44,18 +49,6 @@ class Cart extends Model implements CartInterface
         return $subtotal;
     }
 
-    private function getAverageVatRate(): float
-    {
-        $totalVatRate = 0;
-        $numberOfProducts = count($this->products);
-
-        foreach ($this->products as $product) {
-            $totalVatRate += $product->getVatRate();
-        }
-
-        return $totalVatRate / $numberOfProducts;
-    }
-
     public function getVatAmount(): MoneyInterface
     {
         $subtotal = $this->getSubtotal();
@@ -74,4 +67,22 @@ class Cart extends Model implements CartInterface
 
         return $total;
     }
+
+    private function getAverageVatRate(): float
+    {
+        $totalVatRate = 0;
+        $numberOfProducts = count($this->products);
+
+        foreach ($this->products as $product) {
+            $totalVatRate += $product->getVatRate();
+        }
+
+        return $totalVatRate / $numberOfProducts;
+    }
+
+
+//    public function products(): HasMany
+//    {
+//        return $this->hasMany(Product::class);
+//    }
 }
