@@ -2,18 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\Relations\HasMany;
-
-class Cart implements CartInterface // extends Model
+class Cart implements CartInterface
 {
-    use HasFactory;
-
-//    protected $fillable = [
-//        'product_id'
-//    ];
-
     private array $products = [];
 
     public function addProduct(ProductInterface $product): self
@@ -79,10 +69,4 @@ class Cart implements CartInterface // extends Model
 
         return $totalVatRate / $numberOfProducts;
     }
-
-
-//    public function products(): HasMany
-//    {
-//        return $this->hasMany(Product::class);
-//    }
 }
