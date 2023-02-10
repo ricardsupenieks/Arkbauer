@@ -34,15 +34,17 @@ class ProductController extends Controller
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
+            'image_url' => $request->get('imageUrl'),
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
         ]);
 
-        $productResult = DB::select('select * from products where name = ? and  available = ? and price = ? and vat_rate = ?', [
+        $productResult = DB::select('select * from products where name = ? and  available = ? and price = ? and vat_rate = ? and image_url = ?', [
             $product->getName(),
             $product->getAvailable(),
             $product->getPrice()->getCents(),
-            $product->getVatRate()
+            $product->getVatRate(),
+            $request->get('imageUrl')
         ]);
 
         return response()->json($productResult, 201);
@@ -64,6 +66,7 @@ class ProductController extends Controller
                 'available' => $request->get('available'),
                 'price' => $request->get('price'),
                 'vat_rate' => $request->get('vat_rate'),
+                'image_url' => $request->get('imageUrl'),
                 'updated_at' => Carbon::now(),
         ]);
 
@@ -77,6 +80,6 @@ class ProductController extends Controller
 
     private function getProduct($productId): array
     {
-        return DB::select('select * from products where id=?', [$productId]);
+        return DB::select('select * from products where id = ?', [$productId]);
     }
 }

@@ -1,30 +1,18 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+      <header>
+          <h1 class="text-center py-4 font-mono font-extrabold text-2xl bg-black text-white">COMPANY NAME</h1>
+          <nav class="flex flex-row gap-12 justify-center border border-black font-mono py-2">
+              <RouterLink to="/" class="hover:-translate-y-0.5 hover:scale-100 transition ease-in-out delay-90">HOME</RouterLink>
+              <RouterLink to="/products" class="hover:-translate-y-0.5 hover:scale-102 transition ease-in-out delay-90">CATALOG</RouterLink>
+              <RouterLink to="/#" class="hover:-translate-y-0.5 hover:scale-102 transition ease-in-out delay-90">BESTSELLERS</RouterLink>
+              <RouterLink to="/#" class="hover:-translate-y-0.5 hover:scale-102 transition ease-in-out delay-90">BLOG</RouterLink>
+              <RouterLink to="/#" class="hover:-translate-y-0.5 hover:scale-120 transition ease-in-out delay-90">CONTACT</RouterLink>
+          </nav>
+      </header>
+      <RouterView />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script setup lang="ts">
+</script>
