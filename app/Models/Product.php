@@ -8,6 +8,7 @@ class Product implements ProductInterface
     private int $available;
     private MoneyInterface $price;
     private float $vatRate;
+    private string $image;
 
     public function setName(string $name): self
     {
@@ -51,5 +52,16 @@ class Product implements ProductInterface
     public function getVatRate(): float
     {
         return $this->vatRate;
+    }
+
+    public function setImage(string $imageUrl): self
+    {
+        $this->image = $imageUrl;
+        return $this;
+    }
+
+    public function getImage(): string
+    {
+        return $this->image;
     }
 }

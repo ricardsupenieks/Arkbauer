@@ -15,6 +15,13 @@ class ProductControllerTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Carbon::setTestNow('2022-01-01 00:00:00');
+    }
+
     public function testIndex(): void
     {
         $products = [];
@@ -25,41 +32,57 @@ class ProductControllerTest extends TestCase
             $product->setPrice((new Money())->setCents($this->faker->randomFloat()));
             $product->setAvailable($this->faker->randomNumber(4));
             $product->setVatRate($this->faker->randomFloat(2, 0, 1));
+            $product->setImage($this->faker->name);
 
             DB::table('products')->insert([
                 'name' => $product->getName(),
                 'available' => $product->getAvailable(),
                 'price' => $product->getPrice()->getCents(),
                 'vat_rate' => $product->getVatRate(),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'image_url' => $product->getImage(),
+                'created_at' => now()->format('Y-m-d H:i:s'),
+                'updated_at' => now()->format('Y-m-d H:i:s'),
             ]);
 
             $products[] = $product;
         }
 
+        $productsInDatabase = DB::select('select id from products');
+
         $response = $this->get('/api/v1/products');
 
         $response->assertStatus(200);
-        $response->assertJson(
+        $response->assertExactJson(
             [
                 [
+                    'id' => $productsInDatabase[0]->id,
                     'name' => $products[0]->getName(),
                     'available' => $products[0]->getAvailable(),
                     'price' => $products[0]->getPrice()->getCents(),
                     'vat_rate' => $products[0]->getVatRate(),
+                    'image_url' => $products[0]->getImage(),
+                    'created_at' => now()->format('Y-m-d H:i:s'),
+                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
                 [
+                    'id' => $productsInDatabase[1]->id,
                     'name' => $products[1]->getName(),
                     'available' => $products[1]->getAvailable(),
                     'price' => $products[1]->getPrice()->getCents(),
                     'vat_rate' => $products[1]->getVatRate(),
+                    'image_url' => $products[1]->getImage(),
+                    'created_at' => now()->format('Y-m-d H:i:s'),
+                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
                 [
+                    'id' => $productsInDatabase[2]->id,
                     'name' => $products[2]->getName(),
                     'available' => $products[2]->getAvailable(),
                     'price' => $products[2]->getPrice()->getCents(),
                     'vat_rate' => $products[2]->getVatRate(),
+                    'image_url' => $products[2]->getImage(),
+                    'created_at' => now()->format('Y-m-d H:i:s'),
+                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
             ]
         );
@@ -72,14 +95,16 @@ class ProductControllerTest extends TestCase
         $product->setPrice((new Money())->setCents($this->faker->randomFloat()));
         $product->setAvailable($this->faker->randomNumber(4));
         $product->setVatRate($this->faker->randomFloat(2, 0, 1));
+        $product->setImage($this->faker->name);
 
         DB::table('products')->insert([
             'name' => $product->getName(),
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'image_url' => $product->getImage(),
+            'created_at' => now()->format('Y-m-d H:i:s'),
+            'updated_at' => now()->format('Y-m-d H:i:s'),
         ]);
 
         $productInDatabase = DB::select('select id from products where name=?', [$product->getName()]);
@@ -87,13 +112,17 @@ class ProductControllerTest extends TestCase
         $response = $this->get('/api/v1/products/' . $productInDatabase[0]->id);
 
         $response->assertStatus(200);
-        $response->assertJson(
+        $response->assertExactJson(
             [
                 [
+                    'id' => $productInDatabase[0]->id,
                     'name' => $product->getName(),
                     'available' => $product->getAvailable(),
                     'price' => $product->getPrice()->getCents(),
                     'vat_rate' => $product->getVatRate(),
+                    'image_url' => $product->getImage(),
+                    'created_at' => now()->format('Y-m-d H:i:s'),
+                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
             ]
         );
@@ -105,19 +134,23 @@ class ProductControllerTest extends TestCase
             'name' => 'iphone',
             'available' => 2,
             'price' => 1,
-            'vatRate' => 0.2
+            'vatRate' => 0.2,
+            'imageUrl' => 'imagineLinkHere',
         ]);
 
         $responseContent = json_decode($response->getContent());
 
-        // price changes from 1 to 100, because it gets converted to cents
         $response->assertStatus(201);
-        $response->assertJson([
+        $response->assertExactJson([
                 [
+                    'id' => $responseContent[0]->id,
                     'name' => 'iphone',
                     'available' => 2,
-                    'price' => 100,
+                    'price' => 100, // price changes from 1 to 100, because it gets converted to cents
                     'vat_rate' => 0.2,
+                    'image_url' => 'imagineLinkHere',
+                    'created_at' => now()->format('Y-m-d H:i:s'),
+                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ]
             ]);
 
@@ -128,6 +161,9 @@ class ProductControllerTest extends TestCase
                 'available' => 2,
                 'price' => 100,
                 'vat_rate' => 0.2,
+                'image_url' => 'imagineLinkHere',
+                'created_at' => now()->format('Y-m-d H:i:s'),
+                'updated_at' => now()->format('Y-m-d H:i:s'),
             ]
         );
     }
@@ -139,14 +175,16 @@ class ProductControllerTest extends TestCase
         $product->setPrice((new Money())->setCents($this->faker->randomFloat()));
         $product->setAvailable($this->faker->randomNumber(4));
         $product->setVatRate($this->faker->randomFloat(2, 0, 1));
+        $product->setImage($this->faker->name);
 
         DB::table('products')->insert([
             'name' => $product->getName(),
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'image_url' => $product->getImage(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $productInDatabase = DB::select('select id from products where name=?', [$product->getName()]);
@@ -155,7 +193,8 @@ class ProductControllerTest extends TestCase
             'name' => 'camera',
             'available' => 100,
             'price' => 1,
-            'vat_rate' => 0.9
+            'vatRate' => 0.9,
+            'imageUrl' => 'imagineLinkHere',
         ]);
 
         $responseContent = json_decode($response->getContent());
@@ -165,8 +204,12 @@ class ProductControllerTest extends TestCase
             [
                 'name' => 'camera',
                 'available' => 100,
-                'price' => 1,
+                'price' => 100, // price changes from 1 to 100, because it gets converted to cents
                 'vat_rate' => 0.9,
+                'image_url' => 'imagineLinkHere',
+                'created_at' => now()->format('Y-m-d H:i:s'),
+                'updated_at' => now()->format('Y-m-d H:i:s'),
+
             ]
         ]);
 
@@ -174,8 +217,11 @@ class ProductControllerTest extends TestCase
             'id' => $responseContent[0]->id,
             'name' => 'camera',
             'available' => 100,
-            'price' => 1,
+            'price' => 100, // price changes from 1 to 100, because it gets converted to cents
             'vat_rate' => 0.9,
+            'image_url' => 'imagineLinkHere',
+            'created_at' => now()->format('Y-m-d H:i:s'),
+            'updated_at' => now()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -186,12 +232,14 @@ class ProductControllerTest extends TestCase
         $product->setPrice((new Money())->setCents($this->faker->randomFloat()));
         $product->setAvailable($this->faker->randomNumber(4));
         $product->setVatRate($this->faker->randomFloat(2, 0, 1));
+        $product->setImage($this->faker->name);
 
         DB::table('products')->insert([
             'name' => $product->getName(),
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
+            'image_url' => $product->getImage(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

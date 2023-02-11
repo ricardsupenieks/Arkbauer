@@ -5,21 +5,25 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Money;
 use App\Models\Product;
-use Carbon\Carbon;
+use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index(): JsonResponse
-    {
-        $products = DB::select('select * from products');
+    private ProductService $productService;
 
-        return response()->json($products);
+    public function __construct()
+    {
+        $this->productService = new ProductService();
     }
 
-    public function store(Request $request)
+    public function index(): JsonResponse
+    {
+        return $this->productService->getAll();
+    }
+
+    public function store(Request $request): JsonResponse
     {
         $price = (new Money())->setEuros($request->get('price'));
 
@@ -28,58 +32,32 @@ class ProductController extends Controller
         $product->setAvailable($request->get('available'));
         $product->setPrice($price);
         $product->setVatRate($request->get('vatRate'));
+        $product->setImage($request->get('imageUrl'));
 
-        DB::table('products')->insert([
-            'name' => $product->getName(),
-            'available' => $product->getAvailable(),
-            'price' => $product->getPrice()->getCents(),
-            'vat_rate' => $product->getVatRate(),
-            'image_url' => $request->get('imageUrl'),
-            'created_at'=> Carbon::now(),
-            'updated_at'=> Carbon::now(),
-        ]);
-
-        $productResult = DB::select('select * from products where name = ? and  available = ? and price = ? and vat_rate = ? and image_url = ?', [
-            $product->getName(),
-            $product->getAvailable(),
-            $product->getPrice()->getCents(),
-            $product->getVatRate(),
-            $request->get('imageUrl')
-        ]);
-
-        return response()->json($productResult, 201);
+        return $this->productService->store($product);
     }
 
     public function destroy($product): JsonResponse
     {
-        DB::delete('delete from products where id = ?', [$product]);
-
-        return response()->json([], 204);
+        return $this->productService->delete($product);
     }
 
-    public function update(Request $request, $product): JsonResponse
+    public function update(Request $request, $productId): JsonResponse
     {
-        DB::table('products')
-            ->where('id', $product)
-            ->update([
-                'name' => $request->get('name'),
-                'available' => $request->get('available'),
-                'price' => $request->get('price'),
-                'vat_rate' => $request->get('vat_rate'),
-                'image_url' => $request->get('imageUrl'),
-                'updated_at' => Carbon::now(),
-        ]);
+        $price = (new Money())->setEuros($request->get('price'));
 
-        return response()->json($this->getProduct($product));
+        $product = new Product();
+        $product->setName($request->get('name'));
+        $product->setAvailable($request->get('available'));
+        $product->setPrice($price);
+        $product->setVatRate($request->get('vatRate'));
+        $product->setImage($request->get('imageUrl'));
+
+        return $this->productService->update($product, $productId);
     }
 
     public function show($product): JsonResponse
     {
-        return response()->json($this->getProduct($product));
-    }
-
-    private function getProduct($productId): array
-    {
-        return DB::select('select * from products where id = ?', [$productId]);
+        return $this->productService->getOne($product);
     }
 }
