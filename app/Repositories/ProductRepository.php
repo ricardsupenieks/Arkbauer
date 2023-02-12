@@ -2,54 +2,45 @@
 
 namespace App\Repositories;
 
-use App\Models\Money;
 use App\Models\Product;
-use App\Services\ProductService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {
-    public function getAll(): JsonResponse
+    public function getAll(): array
     {
-        $products = DB::select('select * from products');
-
-        return response()->json($products);
+        return DB::select('select * from products');
     }
 
-    public function store(Product $product): JsonResponse
+    public function store(Product $product): array
     {
         DB::table('products')->insert([
             'name' => $product->getName(),
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
-            'image_url' => $product->getImage(),
+            'image' => $product->getImage(),
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now(),
         ]);
 
-        $productResult = DB::select('select * from products where name = ? and  available = ? and price = ? and vat_rate = ? and image_url = ?', [
+        return DB::select('select * from products where name = ? and  available = ? and price = ? and vat_rate = ? and image = ?', [
             $product->getName(),
             $product->getAvailable(),
             $product->getPrice()->getCents(),
             $product->getVatRate(),
             $product->getImage(),
         ]);
-
-        return response()->json($productResult, 201);
     }
 
-    public function delete(int $productId): JsonResponse
+    public function delete(int $productId): void
     {
         DB::delete('delete from products where id = ?', [$productId]);
-
-        return response()->json([], 204);
     }
 
-    public function update(Product $product, int $productId): JsonResponse
+    public function update(Product $product, int $productId): array
     {
         DB::table('products')
             ->where('id', $productId)
@@ -58,16 +49,16 @@ class ProductRepository
                 'available' => $product->getAvailable(),
                 'price' => $product->getPrice()->getCents(),
                 'vat_rate' => $product->getVatRate(),
-                'image_url' => $product->getImage(),
+                'image' => $product->getImage(),
                 'updated_at' => Carbon::now(),
             ]);
 
-        return response()->json($this->getProduct($productId));
+        return $this->getProduct($productId);
     }
 
-    public function getOne(int $productId): JsonResponse
+    public function getOne(int $productId): array
     {
-        return response()->json($this->getProduct($productId));
+        return $this->getProduct($productId);
     }
 
 

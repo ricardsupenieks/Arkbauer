@@ -20,29 +20,45 @@ class ProductController extends Controller
 
     public function index(): JsonResponse
     {
-        return $this->productService->getAll();
+        $products = $this->productService->getAll();
+
+        return response()->json($products);
     }
 
     public function store(Request $request): JsonResponse
     {
-        $price = (new Money())->setEuros($request->get('price'));
+        $product = $this->createProduct($request);
 
-        $product = new Product();
-        $product->setName($request->get('name'));
-        $product->setAvailable($request->get('available'));
-        $product->setPrice($price);
-        $product->setVatRate($request->get('vatRate'));
-        $product->setImage($request->get('imageUrl'));
+        $productAdded = $this->productService->store($product);
 
-        return $this->productService->store($product);
+        return response()->json($productAdded, 201);
     }
 
     public function destroy($product): JsonResponse
     {
-        return $this->productService->delete($product);
+        $this->productService->delete($product);
+
+        return response()->json([], 204);
     }
 
     public function update(Request $request, $productId): JsonResponse
+    {
+        $product = $this->createProduct($request);
+
+        $productUpdated = $this->productService->update($product, $productId);
+
+        return response()->json($productUpdated);
+    }
+
+    public function show($productId): JsonResponse
+    {
+        $product = $this->productService->getOne($productId);
+
+        return response()->json($product);
+    }
+
+
+    private function createProduct(Request $request): Product
     {
         $price = (new Money())->setEuros($request->get('price'));
 
@@ -52,12 +68,6 @@ class ProductController extends Controller
         $product->setPrice($price);
         $product->setVatRate($request->get('vatRate'));
         $product->setImage($request->get('imageUrl'));
-
-        return $this->productService->update($product, $productId);
-    }
-
-    public function show($product): JsonResponse
-    {
-        return $this->productService->getOne($product);
+        return $product;
     }
 }

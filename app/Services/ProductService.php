@@ -15,27 +15,27 @@ class ProductService
         $this->productRepository = new ProductRepository();
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(): array
     {
         return $this->productRepository->getAll();
     }
 
-    public function store(Product $product): JsonResponse
+    public function store(Product $product): array
     {
         return $this->productRepository->store($product);
     }
 
-    public function delete(int $productId): JsonResponse
+    public function delete(int $productId): void
     {
-        return $this->productRepository->delete($productId);
+        $this->productRepository->delete($productId);
     }
 
-    public function update(Product $product,int $productId): JsonResponse
+    public function update(Product $product,int $productId): array
     {
         return $this->productRepository->update($product, $productId);
     }
 
-    public function getOne(int $productId): JsonResponse
+    public function getOne(int $productId): array
     {
         return $this->productRepository->getOne($productId);
     }

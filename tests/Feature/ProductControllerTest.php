@@ -39,7 +39,7 @@ class ProductControllerTest extends TestCase
                 'available' => $product->getAvailable(),
                 'price' => $product->getPrice()->getCents(),
                 'vat_rate' => $product->getVatRate(),
-                'image_url' => $product->getImage(),
+                'image' => $product->getImage(),
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),
             ]);
@@ -60,7 +60,7 @@ class ProductControllerTest extends TestCase
                     'available' => $products[0]->getAvailable(),
                     'price' => $products[0]->getPrice()->getCents(),
                     'vat_rate' => $products[0]->getVatRate(),
-                    'image_url' => $products[0]->getImage(),
+                    'image' => $products[0]->getImage(),
                     'created_at' => now()->format('Y-m-d H:i:s'),
                     'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
@@ -70,7 +70,7 @@ class ProductControllerTest extends TestCase
                     'available' => $products[1]->getAvailable(),
                     'price' => $products[1]->getPrice()->getCents(),
                     'vat_rate' => $products[1]->getVatRate(),
-                    'image_url' => $products[1]->getImage(),
+                    'image' => $products[1]->getImage(),
                     'created_at' => now()->format('Y-m-d H:i:s'),
                     'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
@@ -80,7 +80,7 @@ class ProductControllerTest extends TestCase
                     'available' => $products[2]->getAvailable(),
                     'price' => $products[2]->getPrice()->getCents(),
                     'vat_rate' => $products[2]->getVatRate(),
-                    'image_url' => $products[2]->getImage(),
+                    'image' => $products[2]->getImage(),
                     'created_at' => now()->format('Y-m-d H:i:s'),
                     'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
@@ -102,12 +102,12 @@ class ProductControllerTest extends TestCase
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
-            'image_url' => $product->getImage(),
+            'image' => $product->getImage(),
             'created_at' => now()->format('Y-m-d H:i:s'),
             'updated_at' => now()->format('Y-m-d H:i:s'),
         ]);
 
-        $productInDatabase = DB::select('select id from products where name=?', [$product->getName()]);
+        $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
 
         $response = $this->get('/api/v1/products/' . $productInDatabase[0]->id);
 
@@ -120,7 +120,7 @@ class ProductControllerTest extends TestCase
                     'available' => $product->getAvailable(),
                     'price' => $product->getPrice()->getCents(),
                     'vat_rate' => $product->getVatRate(),
-                    'image_url' => $product->getImage(),
+                    'image' => $product->getImage(),
                     'created_at' => now()->format('Y-m-d H:i:s'),
                     'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
@@ -148,7 +148,7 @@ class ProductControllerTest extends TestCase
                     'available' => 2,
                     'price' => 100, // price changes from 1 to 100, because it gets converted to cents
                     'vat_rate' => 0.2,
-                    'image_url' => 'imagineLinkHere',
+                    'image' => 'imagineLinkHere',
                     'created_at' => now()->format('Y-m-d H:i:s'),
                     'updated_at' => now()->format('Y-m-d H:i:s'),
                 ]
@@ -161,7 +161,7 @@ class ProductControllerTest extends TestCase
                 'available' => 2,
                 'price' => 100,
                 'vat_rate' => 0.2,
-                'image_url' => 'imagineLinkHere',
+                'image' => 'imagineLinkHere',
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),
             ]
@@ -182,7 +182,7 @@ class ProductControllerTest extends TestCase
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
-            'image_url' => $product->getImage(),
+            'image' => $product->getImage(),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -206,7 +206,7 @@ class ProductControllerTest extends TestCase
                 'available' => 100,
                 'price' => 100, // price changes from 1 to 100, because it gets converted to cents
                 'vat_rate' => 0.9,
-                'image_url' => 'imagineLinkHere',
+                'image' => 'imagineLinkHere',
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),
 
@@ -219,7 +219,7 @@ class ProductControllerTest extends TestCase
             'available' => 100,
             'price' => 100, // price changes from 1 to 100, because it gets converted to cents
             'vat_rate' => 0.9,
-            'image_url' => 'imagineLinkHere',
+            'image' => 'imagineLinkHere',
             'created_at' => now()->format('Y-m-d H:i:s'),
             'updated_at' => now()->format('Y-m-d H:i:s'),
         ]);
@@ -239,7 +239,7 @@ class ProductControllerTest extends TestCase
             'available' => $product->getAvailable(),
             'price' => $product->getPrice()->getCents(),
             'vat_rate' => $product->getVatRate(),
-            'image_url' => $product->getImage(),
+            'image' => $product->getImage(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

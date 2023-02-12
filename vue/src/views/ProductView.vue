@@ -8,7 +8,6 @@
                 <li v-for="product in state.products" :key="product.id">
                     <ProductCard :id="product.id" :name="product.name" :available="product.available"
                                  :price="product.price" :image="product.image"/>
-                    <h1>{{product.image_url}}</h1>
                 </li>
             </ul>
         </div>
@@ -40,13 +39,13 @@ const fetchData = async () => {
         state.isLoading = true;
         const {data} = await axios.get(url.value);
         console.log(data)
-        state.products = data.map((product: any) => {
+        state.products = data.map((product: Product) => {
             return ({
                 id: product.id,
                 name: product.name,
                 available: product.available,
                 price: product.price,
-                image: product.image_url,
+                image: product.image,
             })
         });
         state.isLoading = false;
@@ -62,6 +61,6 @@ interface Product {
     name: string;
     available: number;
     price: number;
-    image_url: string;
+    image: string;
 }
 </script>
