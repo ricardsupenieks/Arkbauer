@@ -32,7 +32,7 @@ onMounted(() => {
     console.log(state.products);
 });
 
-const url = ref("http://127.0.0.1:8000/api/v1/products");
+const url = ref("http://127.0.0.1:8000/api/v1/stock");
 
 const fetchData = async () => {
     try {

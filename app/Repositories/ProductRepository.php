@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class ProductRepository

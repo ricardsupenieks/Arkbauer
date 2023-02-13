@@ -18,18 +18,24 @@ class StockController extends Controller
 
     public function index(): JsonResponse
     {
-        return $this->stockService->getStock();
+        $stock = $this->stockService->getStock();
+
+        return response()->json($stock);
     }
 
     public function store(Request $request): JsonResponse
     {
         $productId = $request->get('product_id');
 
-        return $this->stockService->addProduct($productId);
+        $stockAdded = $this->stockService->addProduct($productId);
+
+        return response()->json($stockAdded, 201);
     }
 
     public function destroy(int $productId): JsonResponse
     {
-        return $this->stockService->removeProduct($productId);
+        $this->stockService->removeProduct($productId);
+
+        return response()->json([], 204);
     }
 }

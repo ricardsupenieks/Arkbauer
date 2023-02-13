@@ -3,19 +3,16 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class StockRepository
 {
-    public function getStock(): JsonResponse
+    public function getStock(): array
     {
-        $productIds = DB::select('select * from stock');
-
-        return response()->json($productIds);
+        return DB::select('select * from products join stock on products.id = product_id');
     }
 
-    public function addProduct(int $productId): JsonResponse
+    public function addProduct(int $productId): array
     {
         DB::table('stock')->insert([
             'product_id' => $productId,
@@ -25,13 +22,11 @@ class StockRepository
 
         $stockResult = DB::select('select * from stock where product_id = ?', [$productId]);
 
-        return response()->json($stockResult, 201);
+        return $stockResult;
     }
 
-    public function removeProduct(int $productId): JsonResponse
+    public function removeProduct(int $productId): void
     {
         DB::delete('delete from stock where product_id = ?', [$productId]);
-
-        return response()->json([], 204);
     }
 }

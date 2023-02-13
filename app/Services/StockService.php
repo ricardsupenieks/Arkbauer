@@ -2,34 +2,30 @@
 
 namespace App\Services;
 
-use App\Repositories\ProductRepository;
 use App\Repositories\StockRepository;
 use Illuminate\Http\JsonResponse;
 
 class StockService
 {
     private StockRepository $stockRepository;
-    private ProductRepository $productRepository;
 
     public function __construct()
     {
         $this->stockRepository = new StockRepository();
     }
 
-    public function getStock(): JsonResponse
+    public function getStock(): array
     {
-        $stockIds = $this->stockRepository->getStock();
-        var_dump($stockIds);die;
-        $products = $this->productRepository->getAll();
+        return $this->stockRepository->getStock();
     }
 
-    public function addProduct(int $productId): JsonResponse
+    public function addProduct(int $productId): array
     {
         return $this->stockRepository->addProduct($productId);
     }
 
-    public function removeProduct(int $productId): JsonResponse
+    public function removeProduct(int $productId): void
     {
-        return $this->stockRepository->removeProduct($productId);
+        $this->stockRepository->removeProduct($productId);
     }
 }

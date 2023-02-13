@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class StockControllerTest extends TestCase
+class CartControllerTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
@@ -46,16 +46,17 @@ class StockControllerTest extends TestCase
         $productsInDatabase = DB::select('select * from products');
 
         foreach ($productsInDatabase as $productInDatabase) {
-            DB::table('stock')->insert([
+            DB::table('cart')->insert([
                 'product_id' => $productInDatabase->id,
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),
             ]);
         }
 
-        $response = $this->get('/api/v1/stock');
+        $response = $this->get('/api/v1/cart');
 
         $response->assertStatus(200);
+
         $response->assertExactJson(
             [
                 [
@@ -113,7 +114,7 @@ class StockControllerTest extends TestCase
 
         $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
 
-        $response = $this->post('/api/v1/stock', [
+        $response = $this->post('/api/v1/cart', [
             'product_id' => $productInDatabase[0]->id,
         ]);
 
@@ -129,7 +130,7 @@ class StockControllerTest extends TestCase
             ]
         ]);
 
-        $this->assertDatabaseHas('stock',
+        $this->assertDatabaseHas('cart',
             [
                 'id' => $responseContent[0]->id,
                 'product_id' => $productInDatabase[0]->id,
@@ -160,13 +161,13 @@ class StockControllerTest extends TestCase
 
         $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
 
-        DB::table('stock')->insert([
+        DB::table('cart')->insert([
             'product_id' => $productInDatabase[0]->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
-        $response = $this->delete('/api/v1/stock/' . $productInDatabase[0]->id);
+        $response = $this->delete('/api/v1/cart/' . $productInDatabase[0]->id);
 
         $response->assertStatus(204);
         $response->assertNoContent();
