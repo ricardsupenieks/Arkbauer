@@ -59,7 +59,5 @@ interface Product {
     price: number;
     image: string;
 }
-
-const props = defineProps<Product>()
 </script>
 

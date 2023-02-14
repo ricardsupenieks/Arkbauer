@@ -15,6 +15,10 @@ class CartRepository
 
     public function addProduct(int $productId): array
     {
+        if (DB::select('select * from cart where product_id = ?', [$productId])) { //check if the product is already in the cart
+            return [];
+        }
+
         DB::table('cart')->insert([
             'product_id' => $productId,
             'created_at'=> Carbon::now(),

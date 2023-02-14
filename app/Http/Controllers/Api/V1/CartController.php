@@ -65,6 +65,9 @@ class CartController extends Controller
 
         $productAdded = $this->cartService->addProduct($productId);
 
+        if ($productAdded === []) {
+            return response()->json($productAdded);
+        }
         return response()->json($productAdded, 201);
     }
 
