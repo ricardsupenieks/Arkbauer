@@ -10,7 +10,6 @@ class CartRepository
 {
     public function getCart(): array
     {
-//        return DB::select('select * from products join cart on products.id =
         return DB::select('select * from cart');
     }
 

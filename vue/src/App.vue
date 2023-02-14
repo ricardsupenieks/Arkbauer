@@ -79,9 +79,11 @@ const fetchCart = async () => {
                 name: product.name,
                 availab: product.available,
                 price: product.price,
+                vatRate: product.vatRate,
                 image: product.image,
             })
         });
+        console.log(data);
         state.subtotal = data.subtotal;
         state.vatAmount = data.vatAmount;
         state.total = data.total;
@@ -94,7 +96,17 @@ const fetchCart = async () => {
 const removeProduct = (productId: number) => {
     try {
         axios.delete(url.value + productId);
-        console.log(state.products.findIndex(product => product.id === productId));
+        let id = state.products.findIndex(product => product.id === productId);
+        state.subtotal = Math.round(state.subtotal - state.products[id].price);
+        state.vatAmount = Math.round(state.vatAmount - (state.products[id].price * state.products[id].vatRate));
+        state.total = Math.round(state.total - (state.products[id].price + (state.products[id].price * state.products[id].vatRate)));
+        state.products.splice(id, 1);
+
+        if(state.products.length === 0) {
+            state.subtotal = 0;
+            state.vatAmount = 0;
+            state.total = 0;
+        }
     } catch (error) {
         console.log(error);
     }
@@ -105,6 +117,7 @@ interface Product {
     name: string;
     available: number;
     price: number;
+    vatRate: number;
     image: string;
 }
 </script>
