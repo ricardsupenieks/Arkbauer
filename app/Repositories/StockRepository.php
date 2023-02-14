@@ -9,7 +9,8 @@ class StockRepository
 {
     public function getStock(): array
     {
-        return DB::select('select * from products join stock on products.id = product_id');
+//        return DB::select('select * from products join stock on products.id = product_id');
+        return DB::select('select * from stock');
     }
 
     public function addProduct(int $productId): array

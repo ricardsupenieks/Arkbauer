@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class CartRepository
 {
-    public function getProducts(): array
+    public function getCart(): array
     {
-        return DB::select('select * from products join cart on products.id = product_id');
+//        return DB::select('select * from products join cart on products.id =
+        return DB::select('select * from cart');
     }
 
     public function addProduct(int $productId): array

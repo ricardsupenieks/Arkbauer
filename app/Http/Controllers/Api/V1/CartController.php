@@ -42,11 +42,11 @@ class CartController extends Controller
             $cart->addProduct($product);
 
             $products []= [
-                'productId' => $productInCart->product_id,
+                'id' => $productInCart->id,
                 'name' => $product->getName(),
                 'vatRate' => $product->getVatRate(),
                 'price' => $product->getPrice()->getEuros(),
-                'availability' => $product->getAvailable(),
+                'available' => $product->getAvailable(),
                 'image' => $product->getImage()
             ];
         }
@@ -61,7 +61,7 @@ class CartController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $productId = $request->get('product_id');
+        $productId = $request->get('productId');
 
         $productAdded = $this->cartService->addProduct($productId);
 
@@ -74,6 +74,4 @@ class CartController extends Controller
 
         return response()->json([], 204);
     }
-
-
 }

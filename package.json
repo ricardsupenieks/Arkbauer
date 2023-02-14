@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.9",
         "@heroicons/vue": "^2.0.15"
     }
 }

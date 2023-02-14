@@ -43,9 +43,7 @@ const fetchData = async () => {
     try {
         state.isLoading = true;
         const {data} = await axios.get(url.value);
-        console.log(data)
         state.product = data[0];
-        console.log(state.product);
         state.isLoading = false;
     } catch (error) {
         console.log("error", error);

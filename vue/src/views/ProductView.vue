@@ -28,17 +28,15 @@ const state = reactive({
 });
 
 onMounted(() => {
-    fetchData();
-    console.log(state.products);
+    fetchProducts();
 });
 
 const url = ref("http://127.0.0.1:8000/api/v1/stock");
 
-const fetchData = async () => {
+const fetchProducts = async () => {
     try {
         state.isLoading = true;
         const {data} = await axios.get(url.value);
-        console.log(data)
         state.products = data.map((product: Product) => {
             return ({
                 id: product.id,
