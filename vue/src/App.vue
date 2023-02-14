@@ -15,7 +15,7 @@
 
                 <Popover>
                     <PopoverButton class="focus:outline-none">
-                        <ShoppingBagIcon class="h-6 w-6 mr-6" @click="fetchCart"/>
+                        <ShoppingBagIcon class="h-6 w-6 mr-6 ml-48" @click="fetchCart"/>
                     </PopoverButton>
 
                     <transition
@@ -27,22 +27,31 @@
                         leave-to-class="translate-y-1 opacity-0"
                     >
                         <PopoverPanel class="z-10 w-full">
-                        <div class="">
-                            <div class="flex flex-col relative bg-white p-6">
-                                <div v-for="product in state.products" :key="product.id">
-                                    <div class="flex flex-row gap-12 text-sm">
-                                        <p>{{ product.name }}</p>
-                                        <p>{{ product.price }}$</p>
+                            <div v-if="state.products.length !== 0">
+                                <div class="absolute mt-3">
+                                    <div class="flex flex-col relative bg-white p-6 rounded-lg border">
+                                        <div v-for="product in state.products" :key="product.id">
+                                            <div class="flex flex-row gap-12 text-sm">
+                                                <p>{{ product.name }}</p>
+                                                <p>{{ product.price }}$</p>
+                                            </div>
+                                            <p class="text-gray-600 underline text-xs cursor-pointer w-auto" @click="removeProduct(product.id)">remove</p>
+                                        </div>
+                                        <div class="flex flex-col mt-3 text-sm">
+                                            <p class="text-end">Subtotal: {{ state.subtotal }}$</p>
+                                            <p class="text-end">Vat amount: {{ state.vatAmount }}$</p>
+                                            <p class="text-end">Total: {{ state.total }}$</p>
+                                        </div>
                                     </div>
-                                    <p class="text-gray-600 underline text-xs cursor-pointer w-auto" @click="removeProduct(product.id)">remove</p>
-                                </div>
-                                <div class="flex flex-col mt-3 text-sm">
-                                    <p class="text-end">Subtotal: {{ state.subtotal }}$</p>
-                                    <p class="text-end">Vat amount: {{ state.vatAmount }}$</p>    
-                                    <p class="text-end">Total: {{ state.total }}$</p>    
                                 </div>
                             </div>
-                        </div>
+                            <div v-else>
+                                <div class="absolute mt-3">
+                                    <p class="relative bg-white p-6 rounded-lg border text-sm w-[207px] text-center">
+                                        Cart empty
+                                    </p>
+                                </div>
+                            </div>
                         </PopoverPanel>
                     </transition>
                 </Popover>

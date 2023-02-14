@@ -15,7 +15,7 @@
     <div v-else>
         <div class="max-w-sm rounded overflow-hidden bg-white border cursor-not-allowed	">
             <div class="h-40 w-52 overflow-hidden relative">
-                <img class="object-scale-down w-48 object-center px-2 mt-4 mx-auto grayscale" :src="props.image" :alt="props.name">
+                <img class="object-scale-down w-48 object-center px-2 mt-4 mx-auto grayscale z-0" :src="props.image" :alt="props.name">
             </div>
             <div class="pl-1 pb-1">
                 <p class="font-bold text-md text-center my-4">OUT OF STOCK</p>
