@@ -41,11 +41,12 @@ class Cart implements CartInterface
 
     public function getVatAmount(): MoneyInterface
     {
-        $subtotal = $this->getSubtotal();
-        $vatAmount = new Money();
-        $vatAmount->setCents($subtotal->getCents() * $this->getAverageVatRate());
-
-        return $vatAmount;
+        $totalVatAmount = new Money();
+        $totalVatAmount->setCents(0);
+        foreach($this->products as $product) {
+           $totalVatAmount->setCents($totalVatAmount->getCents() + $product->getPrice()->getCents() * $product->getVatRate());
+        }
+        return $totalVatAmount;
     }
 
     public function getTotal(): MoneyInterface
@@ -56,17 +57,5 @@ class Cart implements CartInterface
         $total->setCents($subtotal->getCents() + $vatAmount->getCents());
 
         return $total;
-    }
-
-    private function getAverageVatRate(): float
-    {
-        $totalVatRate = 0;
-        $numberOfProducts = count($this->products);
-
-        foreach ($this->products as $product) {
-            $totalVatRate += $product->getVatRate();
-        }
-
-        return $totalVatRate / $numberOfProducts;
     }
 }

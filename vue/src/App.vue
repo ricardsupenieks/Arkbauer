@@ -6,7 +6,7 @@
           </RouterLink>
           <nav class="flex flex-row justify-between border border-black font-mono py-2 bg-white">
               <div/>
-              <div class="flex flex-row gap-12 mt-1">
+              <div class="flex flex-row gap-12 mt-1 ml-48">
                   <RouterLink to="/" class="hover:-translate-y-0.5 hover:scale-100 transition ease-in-out delay-90">CATALOG</RouterLink>
                   <RouterLink to="/#" class="hover:-translate-y-0.5 hover:scale-102 transition ease-in-out delay-90">BESTSELLERS</RouterLink>
                   <RouterLink to="/#" class="hover:-translate-y-0.5 hover:scale-102 transition ease-in-out delay-90">ABOUT</RouterLink>
