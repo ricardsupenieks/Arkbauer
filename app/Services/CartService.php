@@ -34,6 +34,7 @@ class CartService
         foreach ($productIds as $singleProductId) {
             $productsInCart []= $this->productRepository->getOne($singleProductId)[0];
         }
+
         $cart = new Cart();
 
         $products = [];
@@ -51,7 +52,7 @@ class CartService
 
             $cart->addProduct($product);
 
-            $products []= [
+            $products [] = [
                 'id' => $productInCart->id,
                 'name' => $product->getName(),
                 'vatRate' => $product->getVatRate(),
