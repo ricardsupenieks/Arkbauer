@@ -2,13 +2,38 @@
 
 namespace App\Models;
 
-class Product implements ProductInterface
+use JsonSerializable;
+
+class Product implements ProductInterface, JsonSerializable
 {
+    private int $id;
     private string $name;
     private int $available;
     private MoneyInterface $price;
     private float $vatRate;
     private string $image;
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'available' => $this->getAvailable(),
+            'price' => $this->getPrice()->getCents(),
+            'vat_rate' => $this->getVatRate(),
+            'image' => $this->getImage(),
+        ];
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     public function setName(string $name): self
     {

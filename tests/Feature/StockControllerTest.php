@@ -65,8 +65,6 @@ class StockControllerTest extends TestCase
                     'price' => $productsInDatabase[0]->price,
                     'vat_rate' => $productsInDatabase[0]->vat_rate,
                     'image' => $productsInDatabase[0]->image,
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
                 [
                     'id' => $productsInDatabase[1]->id,
@@ -75,8 +73,6 @@ class StockControllerTest extends TestCase
                     'price' => $productsInDatabase[1]->price,
                     'vat_rate' => $productsInDatabase[1]->vat_rate,
                     'image' => $productsInDatabase[1]->image,
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
                 [
                     'id' => $productsInDatabase[2]->id,
@@ -85,8 +81,6 @@ class StockControllerTest extends TestCase
                     'price' => $productsInDatabase[2]->price,
                     'vat_rate' => $productsInDatabase[2]->vat_rate,
                     'image' => $productsInDatabase[2]->image,
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
             ]
         );

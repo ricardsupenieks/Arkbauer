@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Money;
+use App\Models\Product;
+use App\Models\Stock;
 use App\Repositories\ProductRepository;
 use App\Repositories\StockRepository;
 use Illuminate\Http\JsonResponse;
@@ -22,17 +25,28 @@ class StockService
         $stock = $this->stockRepository->getStock();
 
         $productIds = [];
-        $products = [];
+        $products = new Stock();
 
         foreach ($stock as $product) {
             $productIds []= $product->product_id;
         }
 
         foreach ($productIds as $singleProductId) {
-            $products []= $this->productRepository->getOne($singleProductId)[0];
-        }
+            $singleProduct = $this->productRepository->getOne($singleProductId)[0];
 
-        return $products;
+            $product = new Product();
+            $price = (new Money())->setCents($singleProduct->price);
+
+            $product->setId($singleProductId);
+            $product->setName($singleProduct->name);
+            $product->setPrice($price);
+            $product->setVatRate($singleProduct->vat_rate);
+            $product->setAvailable($singleProduct->available);
+            $product->setImage($singleProduct->image);
+
+            $products->addProduct($product);
+        }
+        return $products->getProducts();
     }
 
     public function addProduct(int $productId): array
