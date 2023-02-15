@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
-use App\Models\Money;
-use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,20 +19,19 @@ class CartController extends Controller
 
     public function index(): JsonResponse
     {
-        $productsInCart = $this->cartService->getProducts();
+        $products = $this->cartService->getProducts();
 
-        return response()->json($productsInCart);
+        return response()->json($products);
     }
 
     public function store(Request $request): JsonResponse
     {
-        $productId = $request->get('productId');
+        $request->validate([
+           'productId' => 'unique:cart,product_id'
+        ]);
 
-        $productAdded = $this->cartService->addProduct($productId);
+        $productAdded = $this->cartService->addProduct($request->get('productId'));
 
-        if ($productAdded === []) {
-            return response()->json($productAdded);
-        }
         return response()->json($productAdded, 201);
     }
 

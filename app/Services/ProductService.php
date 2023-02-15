@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\JsonResponse;
 
 class ProductService
 {
