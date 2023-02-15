@@ -13,9 +13,9 @@ class ProductController extends Controller
 {
     private ProductService $productService;
 
-    public function __construct()
+    public function __construct(ProductService $service)
     {
-        $this->productService = new ProductService();
+        $this->productService = $service;
     }
 
     public function index(): JsonResponse

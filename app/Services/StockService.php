@@ -13,10 +13,10 @@ class StockService
     private StockRepository $stockRepository;
     private ProductRepository $productRepository;
 
-    public function __construct()
+    public function __construct(StockRepository $stockRepository, ProductRepository $productRepository)
     {
-        $this->stockRepository = new StockRepository();
-        $this->productRepository = new ProductRepository();
+        $this->stockRepository = $stockRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function getStock(): array

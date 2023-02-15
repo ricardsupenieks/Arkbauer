@@ -9,12 +9,11 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-
     private CartService $cartService;
 
-    public function __construct()
+    public function __construct(CartService $service)
     {
-        $this->cartService = new CartService();
+        $this->cartService = $service;
     }
 
     public function index(): JsonResponse

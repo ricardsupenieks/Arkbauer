@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\StockController;
+use App\Services\StockService;
 use Illuminate\Support\Facades\Route;
 
 /*

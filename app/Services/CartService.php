@@ -10,14 +10,13 @@ use App\Repositories\ProductRepository;
 
 class CartService
 {
-
     private CartRepository $cartRepository;
     private ProductRepository $productRepository;
 
-    public function __construct()
+    public function __construct(CartRepository $cartRepository, ProductRepository $productRepository)
     {
-        $this->cartRepository = new CartRepository();
-        $this->productRepository = new ProductRepository();
+        $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function getProducts(): array

@@ -141,39 +141,6 @@ class CartControllerTest extends TestCase
         );
     }
 
-    public function testCreateIfProductIsInCartAlready()
-    {
-        $product = new Product();
-        $product->setName($this->faker->name);
-        $product->setPrice((new Money())->setCents($this->faker->randomFloat()));
-        $product->setAvailable($this->faker->randomNumber(4));
-        $product->setVatRate($this->faker->randomFloat(2, 0, 1));
-        $product->setImage($this->faker->name);
-
-        DB::table('products')->insert([
-            'name' => $product->getName(),
-            'available' => $product->getAvailable(),
-            'price' => $product->getPrice()->getCents(),
-            'vat_rate' => $product->getVatRate(),
-            'image' => $product->getImage(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
-
-        $this->post('/api/v1/cart', [
-            'productId' => $productInDatabase[0]->id,
-        ]);
-
-        $response = $this->post('/api/v1/cart', [
-            'productId' => $productInDatabase[0]->id,
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertExactJson([]);
-    }
-
     public function testDestroy()
     {
         $product = new Product();

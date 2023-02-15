@@ -11,9 +11,9 @@ class StockController extends Controller
 {
     private StockService $stockService;
 
-    public function __construct()
+    public function __construct(StockService $service)
     {
-        $this->stockService = new StockService();
+        $this->stockService = $service;
     }
 
     public function index(): JsonResponse
