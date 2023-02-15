@@ -22,41 +22,9 @@ class CartController extends Controller
 
     public function index(): JsonResponse
     {
-        $cart = new Cart();
-
         $productsInCart = $this->cartService->getProducts();
 
-        $products = [];
-
-        foreach ($productsInCart as $productInCart) {
-            $product = new Product();
-            $product->setName($productInCart->name);
-            $product->setVatRate($productInCart->vat_rate);
-
-            $price = (new Money())->setCents($productInCart->price);
-
-            $product->setPrice($price);
-            $product->setAvailable($productInCart->available);
-            $product->setImage($productInCart->image);
-
-            $cart->addProduct($product);
-
-            $products []= [
-                'id' => $productInCart->id,
-                'name' => $product->getName(),
-                'vatRate' => $product->getVatRate(),
-                'price' => $product->getPrice()->getEuros(),
-                'available' => $product->getAvailable(),
-                'image' => $product->getImage()
-            ];
-        }
-
-        return response()->json([
-            'products' => $products,
-            'subtotal' => $cart->getSubtotal()->getEuros(),
-            'vatAmount' => $cart->getVatAmount()->getEuros(),
-            'total' => $cart->getTotal()->getEuros()
-        ]);
+        return response()->json($productsInCart);
     }
 
     public function store(Request $request): JsonResponse

@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\Stock;
 use App\Repositories\ProductRepository;
 use App\Repositories\StockRepository;
-use Illuminate\Http\JsonResponse;
 
 class StockService
 {
