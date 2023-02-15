@@ -86,13 +86,12 @@ const fetchCart = async () => {
             return ({
                 id: product.id,
                 name: product.name,
-                availab: product.available,
+                available: product.available,
                 price: product.price,
                 vatRate: product.vatRate,
                 image: product.image,
             })
         });
-        console.log(data);
         state.subtotal = data.subtotal;
         state.vatAmount = data.vatAmount;
         state.total = data.total;

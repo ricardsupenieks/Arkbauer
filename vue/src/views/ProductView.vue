@@ -1,6 +1,6 @@
 <template>
     <MainContainer>
-        <div v-if="state.isLoading">
+        <div v-if="state.isLoading" class="mt-24">
             <Spinner/>
         </div>
         <div v-else>
@@ -44,7 +44,7 @@ const fetchProducts = async () => {
                 available: product.available,
                 price: product.price,
                 image: product.image,
-            })
+            });
         });
         state.isLoading = false;
     } catch (error) {
