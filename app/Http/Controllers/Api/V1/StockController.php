@@ -30,9 +30,7 @@ class StockController extends Controller
             'productId' => 'unique:stock,product_id'
         ]);
 
-        $productId = $request->get('productId');
-
-        $product = $this->stockService->addProduct($productId);
+        $product = $this->stockService->addProduct($request->get('productId'));
 
         return fractal($product, new StockTransformer())->respond(201);
     }

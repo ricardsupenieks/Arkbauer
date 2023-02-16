@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Services\CartService;
+use App\Transformers\CartTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,12 @@ class CartController extends Controller
     {
         $products = $this->cartService->getProducts();
 
-        return response()->json($products);
+        $cart = new Cart();
+
+        foreach ($products as $product) {
+            $cart->addProduct($product);
+        }
+        return fractal($cart, new CartTransformer())->respond();
     }
 
     public function store(Request $request): JsonResponse

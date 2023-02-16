@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Cart;
 use App\Models\Money;
 use App\Models\Product;
 use App\Repositories\CartRepository;
@@ -24,49 +23,28 @@ class CartService
         $cart = $this->cartRepository->getCart();
 
         $productIds = [];
-        $productsInCart = new Cart();
+        $products = [];
 
         foreach ($cart as $product) {
             $productIds []= $product->product_id;
         }
 
         foreach ($productIds as $singleProductId) {
-            $productsInCart []= $this->productRepository->getOne($singleProductId)[0];
-        }
+            $productInformation = $this->productRepository->getOne($singleProductId)[0];
 
-        $cart = new Cart();
-
-        $products = [];
-
-        foreach ($productsInCart as $productInCart) {
             $product = new Product();
-            $product->setName($productInCart->name);
-            $product->setVatRate($productInCart->vat_rate);
+            $price = (new Money())->setCents($productInformation->price);
 
-            $price = (new Money())->setCents($productInCart->price);
-
+            $product->setId($productInformation->id);
+            $product->setName($productInformation->name);
+            $product->setVatRate($productInformation->vat_rate);
             $product->setPrice($price);
-            $product->setAvailable($productInCart->available);
-            $product->setImage($productInCart->image);
+            $product->setAvailable($productInformation->available);
+            $product->setImage($productInformation->image);
 
-            $cart->addProduct($product);
-
-            $products [] = [
-                'id' => $productInCart->id,
-                'name' => $product->getName(),
-                'vatRate' => $product->getVatRate(),
-                'price' => $product->getPrice()->getEuros(),
-                'available' => $product->getAvailable(),
-                'image' => $product->getImage()
-            ];
+            $products [] = $product;
         }
-
-        return [
-            'products' => $products,
-            'subtotal' => $cart->getSubtotal()->getEuros(),
-            'vatAmount' => $cart->getVatAmount()->getEuros(),
-            'total' => $cart->getTotal()->getEuros()
-        ];
+        return $products;
     }
 
     public function addProduct(int $productId): array

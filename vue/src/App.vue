@@ -33,14 +33,14 @@
                                         <div v-for="product in state.products" :key="product.id">
                                             <div class="flex flex-row gap-12 text-sm">
                                                 <p>{{ product.name }}</p>
-                                                <p>{{ product.price }}$</p>
+                                                <p>{{ product.price / 100 }}$</p>
                                             </div>
                                             <p class="text-gray-600 underline text-xs cursor-pointer w-auto" @click="removeProduct(product.id)">remove</p>
                                         </div>
                                         <div class="flex flex-col mt-3 text-sm">
-                                            <p class="text-end">Subtotal: {{ state.subtotal }}$</p>
-                                            <p class="text-end">Vat amount: {{ state.vatAmount }}$</p>
-                                            <p class="text-end">Total: {{ state.total }}$</p>
+                                            <p class="text-end">Subtotal: {{ state.subtotal / 100 }}$</p>
+                                            <p class="text-end">Vat amount: {{ state.vatAmount / 100 }}$</p>
+                                            <p class="text-end">Total: {{ state.total / 100 }}$</p>
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@ const state = reactive({
 const fetchCart = async () => {
     try {
         const {data} = await axios.get(url.value);
-        state.products = data.products.map((product: Product) => {
+        state.products = data.data.products.map((product: Product) => {
             return ({
                 id: product.id,
                 name: product.name,
@@ -92,9 +92,9 @@ const fetchCart = async () => {
                 image: product.image,
             })
         });
-        state.subtotal = data.subtotal;
-        state.vatAmount = data.vatAmount;
-        state.total = data.total;
+        state.subtotal = data.data.subtotal;
+        state.vatAmount = data.data.vatAmount;
+        state.total = data.data.total;
     } catch (error) {
         console.log("error", error);
         state.isError = true;

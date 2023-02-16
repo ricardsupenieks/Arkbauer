@@ -57,16 +57,22 @@ class CartControllerTest extends TestCase
 
         $responseContent = json_decode($response->getContent());
 
+        $subtotal = $productsInDatabase[0]->price + $productsInDatabase[1]->price + $productsInDatabase[2]->price;
+
+        $vatAmount = ($productsInDatabase[0]->price * $productsInDatabase[0]->vat_rate) +
+            ($productsInDatabase[1]->price * $productsInDatabase[1]->vat_rate) +
+            ($productsInDatabase[2]->price * $productsInDatabase[2]->vat_rate);
+
         $response->assertStatus(200);
 
-        $response->assertExactJson(
-            [
+        $response->assertExactJson([
+            'data' => [
                 'products' => [
                     [
                         'id' => $productsInDatabase[0]->id,
                         'name' => $productsInDatabase[0]->name,
                         'vatRate' => $productsInDatabase[0]->vat_rate,
-                        'price' => $productsInDatabase[0]->price / 100, // divided by hundred because the price in the database is in cents, while the response is in euros
+                        'price' => $productsInDatabase[0]->price,
                         'available' => $productsInDatabase[0]->available,
                         'image' => $productsInDatabase[0]->image
                     ],
@@ -74,7 +80,7 @@ class CartControllerTest extends TestCase
                         'id' => $productsInDatabase[1]->id,
                         'name' => $productsInDatabase[1]->name,
                         'vatRate' => $productsInDatabase[1]->vat_rate,
-                        'price' => $productsInDatabase[1]->price / 100, // divided by hundred because the price in the database is in cents, while the json is in euros
+                        'price' => $productsInDatabase[1]->price,
                         'available' => $productsInDatabase[1]->available,
                         'image' => $productsInDatabase[1]->image,
                     ],
@@ -82,16 +88,17 @@ class CartControllerTest extends TestCase
                         'id' => $productsInDatabase[2]->id,
                         'name' => $productsInDatabase[2]->name,
                         'vatRate' => $productsInDatabase[2]->vat_rate,
-                        'price' => $productsInDatabase[2]->price / 100, // divided by hundred because the price in the database is in cents, while the json is in euros
+                        'price' => $productsInDatabase[2]->price,
                         'available' => $productsInDatabase[2]->available,
                         'image' => $productsInDatabase[2]->image,
                     ]
                 ],
-                'subtotal' => $responseContent->subtotal,
-                'vatAmount' => $responseContent->vatAmount,
-                'total' => $responseContent->total
+                'subtotal' => $subtotal,
+                'vatAmount' =>
+                    $vatAmount,
+                'total' => $subtotal + $vatAmount,
             ]
-        );
+        ]);
     }
 
     public function testCreate()

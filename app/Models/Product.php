@@ -6,7 +6,7 @@ use App\Interfaces\MoneyInterface;
 use App\Interfaces\ProductInterface;
 use JsonSerializable;
 
-class Product implements ProductInterface, JsonSerializable
+class Product implements ProductInterface
 {
     private int $id;
     private string $name;
@@ -14,18 +14,6 @@ class Product implements ProductInterface, JsonSerializable
     private MoneyInterface $price;
     private float $vatRate;
     private string $image;
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'available' => $this->getAvailable(),
-            'price' => $this->getPrice()->getCents(),
-            'vat_rate' => $this->getVatRate(),
-            'image' => $this->getImage(),
-        ];
-    }
 
     public function getId(): int
     {
