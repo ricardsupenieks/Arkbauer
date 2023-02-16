@@ -37,7 +37,7 @@ const fetchProducts = async () => {
     try {
         state.isLoading = true;
         const {data} = await axios.get(url.value);
-        state.products = data.map((product: Product) => {
+        state.products = data.data.map((product: Product) => {
             return ({
                 id: product.id,
                 name: product.name,

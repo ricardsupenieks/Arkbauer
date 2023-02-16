@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Services\StockService;
+use App\Transformers\StockTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,16 +21,20 @@ class StockController extends Controller
     {
         $stock = $this->stockService->getStock();
 
-        return response()->json($stock);
+        return fractal($stock, new StockTransformer())->respond();
     }
 
     public function store(Request $request): JsonResponse
     {
-        $productId = $request->get('product_id');
+        $request->validate([
+            'productId' => 'unique:stock,product_id'
+        ]);
 
-        $stockAdded = $this->stockService->addProduct($productId);
+        $productId = $request->get('productId');
 
-        return response()->json($stockAdded, 201);
+        $product = $this->stockService->addProduct($productId);
+
+        return fractal($product, new StockTransformer())->respond(201);
     }
 
     public function destroy(int $productId): JsonResponse

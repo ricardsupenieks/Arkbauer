@@ -48,9 +48,22 @@ class StockService
         return $products->getProducts();
     }
 
-    public function addProduct(int $productId): array
+    public function addProduct(int $productId): Product
     {
-        return $this->stockRepository->addProduct($productId);
+        $productId = $this->stockRepository->addProduct($productId)[0]->product_id;
+        $productInformation = $this->productRepository->getOne($productId)[0];
+
+        $product = new Product();
+        $price = (new Money())->setCents($productInformation->price);
+
+        $product->setId($productInformation->id);
+        $product->setName($productInformation->name);
+        $product->setPrice($price);
+        $product->setAvailable($productInformation->available);
+        $product->setVatRate($productInformation->vat_rate);
+        $product->setImage($productInformation->image);
+
+        return $product;
     }
 
     public function removeProduct(int $productId): void

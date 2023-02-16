@@ -9,7 +9,6 @@ class StockRepository
 {
     public function getStock(): array
     {
-//        return DB::select('select * from products join stock on products.id = product_id');
         return DB::select('select * from stock');
     }
 
@@ -21,9 +20,7 @@ class StockRepository
             'updated_at'=> Carbon::now(),
         ]);
 
-        $stockResult = DB::select('select * from stock where product_id = ?', [$productId]);
-
-        return $stockResult;
+        return DB::select('select * from stock where product_id = ?', [$productId]);
     }
 
     public function removeProduct(int $productId): void

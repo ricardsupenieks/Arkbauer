@@ -56,34 +56,35 @@ class StockControllerTest extends TestCase
         $response = $this->get('/api/v1/stock');
 
         $response->assertStatus(200);
-        $response->assertExactJson(
-            [
+        $response->assertExactJson([
+            'data' =>
                 [
-                    'id' => $productsInDatabase[0]->id,
-                    'name' => $productsInDatabase[0]->name,
-                    'available' => $productsInDatabase[0]->available,
-                    'price' => $productsInDatabase[0]->price,
-                    'vat_rate' => $productsInDatabase[0]->vat_rate,
-                    'image' => $productsInDatabase[0]->image,
-                ],
-                [
-                    'id' => $productsInDatabase[1]->id,
-                    'name' => $productsInDatabase[1]->name,
-                    'available' => $productsInDatabase[1]->available,
-                    'price' => $productsInDatabase[1]->price,
-                    'vat_rate' => $productsInDatabase[1]->vat_rate,
-                    'image' => $productsInDatabase[1]->image,
-                ],
-                [
-                    'id' => $productsInDatabase[2]->id,
-                    'name' => $productsInDatabase[2]->name,
-                    'available' => $productsInDatabase[2]->available,
-                    'price' => $productsInDatabase[2]->price,
-                    'vat_rate' => $productsInDatabase[2]->vat_rate,
-                    'image' => $productsInDatabase[2]->image,
-                ],
-            ]
-        );
+                    [
+                        'id' => $productsInDatabase[0]->id,
+                        'name' => $productsInDatabase[0]->name,
+                        'available' => $productsInDatabase[0]->available,
+                        'price' => $productsInDatabase[0]->price,
+                        'vatRate' => $productsInDatabase[0]->vat_rate,
+                        'image' => $productsInDatabase[0]->image,
+                    ],
+                    [
+                        'id' => $productsInDatabase[1]->id,
+                        'name' => $productsInDatabase[1]->name,
+                        'available' => $productsInDatabase[1]->available,
+                        'price' => $productsInDatabase[1]->price,
+                        'vatRate' => $productsInDatabase[1]->vat_rate,
+                        'image' => $productsInDatabase[1]->image,
+                    ],
+                    [
+                        'id' => $productsInDatabase[2]->id,
+                        'name' => $productsInDatabase[2]->name,
+                        'available' => $productsInDatabase[2]->available,
+                        'price' => $productsInDatabase[2]->price,
+                        'vatRate' => $productsInDatabase[2]->vat_rate,
+                        'image' => $productsInDatabase[2]->image,
+                    ],
+                ]
+        ]);
     }
 
     public function testCreate()
@@ -108,24 +109,26 @@ class StockControllerTest extends TestCase
         $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
 
         $response = $this->post('/api/v1/stock', [
-            'product_id' => $productInDatabase[0]->id,
+            'productId' => $productInDatabase[0]->id,
         ]);
 
         $responseContent = json_decode($response->getContent());
 
         $response->assertStatus(201);
         $response->assertExactJson([
-            [
-                'id' => $responseContent[0]->id,
-                'product_id' => $productInDatabase[0]->id,
-                'created_at' => now()->format('Y-m-d H:i:s'),
-                'updated_at' => now()->format('Y-m-d H:i:s'),
+            'data' => [
+                'id' => $responseContent->data->id,
+                'name' => $product->getName(),
+                'price' => $product->getPrice()->getCents(),
+                'vatRate' => $product->getVatRate(),
+                'available' => $product->getAvailable(),
+                'image' => $product->getImage(),
             ]
         ]);
 
         $this->assertDatabaseHas('stock',
             [
-                'id' => $responseContent[0]->id,
+                'id' => $responseContent->data->id,
                 'product_id' => $productInDatabase[0]->id,
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),
