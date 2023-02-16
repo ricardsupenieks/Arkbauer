@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Interfaces\MoneyInterface;
+use App\Interfaces\ProductInterface;
 use JsonSerializable;
 
 class Product implements ProductInterface, JsonSerializable

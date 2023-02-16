@@ -24,7 +24,7 @@ class CartService
         $cart = $this->cartRepository->getCart();
 
         $productIds = [];
-        $productsInCart = [];
+        $productsInCart = new Cart();
 
         foreach ($cart as $product) {
             $productIds []= $product->product_id;

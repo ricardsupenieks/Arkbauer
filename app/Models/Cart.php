@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Interfaces\CartInterface;
+use App\Interfaces\MoneyInterface;
+use App\Interfaces\ProductInterface;
+
 class Cart implements CartInterface
 {
     private array $products = [];

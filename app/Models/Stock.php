@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Interfaces\ProductInterface;
+use App\Interfaces\StockInterface;
+
 class Stock implements StockInterface
 {
     private array $products = [];
