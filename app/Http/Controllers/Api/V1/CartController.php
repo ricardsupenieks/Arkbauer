@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Services\CartService;
 use App\Transformers\CartTransformer;
+use App\Transformers\ProductTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,7 @@ class CartController extends Controller
 
         $productAdded = $this->cartService->addProduct($request->get('productId'));
 
-        return response()->json($productAdded, 201);
+        return fractal($productAdded, new ProductTransformer())->respond(201);
     }
 
     public function destroy(int $productId): JsonResponse

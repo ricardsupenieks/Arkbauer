@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Money;
 use App\Models\Product;
 use App\Services\ProductService;
+use App\Transformers\ProductTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -22,16 +23,16 @@ class ProductController extends Controller
     {
         $products = $this->productService->getAll();
 
-        return response()->json($products);
+        return fractal($products, new ProductTransformer())->respond();
     }
 
     public function store(Request $request): JsonResponse
     {
         $product = $this->createProduct($request);
 
-        $productAdded = $this->productService->store($product);
+        $product = $this->productService->store($product);
 
-        return response()->json($productAdded, 201);
+        return fractal($product, new ProductTransformer())->respond(201);
     }
 
     public function destroy($product): JsonResponse
@@ -45,16 +46,16 @@ class ProductController extends Controller
     {
         $product = $this->createProduct($request);
 
-        $productUpdated = $this->productService->update($product, $productId);
+        $product = $this->productService->update($product, $productId);
 
-        return response()->json($productUpdated);
+        return fractal($product, new ProductTransformer())->respond();
     }
 
     public function show($productId): JsonResponse
     {
         $product = $this->productService->getOne($productId);
 
-        return response()->json($product);
+        return fractal($product, new ProductTransformer())->respond();
     }
 
 
@@ -68,6 +69,7 @@ class ProductController extends Controller
         $product->setPrice($price);
         $product->setVatRate($request->get('vatRate'));
         $product->setImage($request->get('imageUrl'));
+
         return $product;
     }
 }

@@ -120,7 +120,7 @@ class CartControllerTest extends TestCase
             'updated_at' => Carbon::now(),
         ]);
 
-        $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
+        $productInDatabase = DB::select('select * from products where name = ?', [$product->getName()]);
 
         $response = $this->post('/api/v1/cart', [
             'productId' => $productInDatabase[0]->id,
@@ -129,18 +129,22 @@ class CartControllerTest extends TestCase
         $responseContent = json_decode($response->getContent());
 
         $response->assertStatus(201);
-        $response->assertExactJson([
-            [
-                'id' => $responseContent[0]->id,
-                'product_id' => $productInDatabase[0]->id,
-                'created_at' => now()->format('Y-m-d H:i:s'),
-                'updated_at' => now()->format('Y-m-d H:i:s'),
-            ]
+        $response->assertExactJson(
+            [ 'data' =>
+                [
+                    'id' => $responseContent->data->id,
+                    'name' => $productInDatabase[0]->name,
+                    'available' => $productInDatabase[0]->available,
+                    'price' => $productInDatabase[0]->price,
+                    'vat_rate' => $productInDatabase[0]->vat_rate,
+                    'image' => $productInDatabase[0]->image,
+
+                ]
         ]);
 
         $this->assertDatabaseHas('cart',
             [
-                'id' => $responseContent[0]->id,
+                'id' => $responseContent->data->id,
                 'product_id' => $productInDatabase[0]->id,
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),

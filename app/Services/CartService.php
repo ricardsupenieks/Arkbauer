@@ -47,9 +47,22 @@ class CartService
         return $products;
     }
 
-    public function addProduct(int $productId): array
+    public function addProduct(int $productId): Product
     {
-        return $this->cartRepository->addProduct($productId);
+        $this->cartRepository->addProduct($productId);
+
+        $productInformation = $this->productRepository->getOne($productId)[0];
+        $product = new Product();
+        $price = (new Money())->setCents($productInformation->price);
+
+        $product->setId($productInformation->id);
+        $product->setName($productInformation->name);
+        $product->setAvailable($productInformation->available);
+        $product->setPrice($price);
+        $product->setVatRate($productInformation->vat_rate);
+        $product->setImage($productInformation->image);
+
+        return $product;
     }
 
     public function removeProduct(int $productId): void

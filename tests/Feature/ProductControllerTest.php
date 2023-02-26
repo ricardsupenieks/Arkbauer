@@ -53,37 +53,33 @@ class ProductControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertExactJson(
-            [
+            [ 'data' =>
                 [
-                    'id' => $productsInDatabase[0]->id,
-                    'name' => $products[0]->getName(),
-                    'available' => $products[0]->getAvailable(),
-                    'price' => $products[0]->getPrice()->getCents(),
-                    'vat_rate' => $products[0]->getVatRate(),
-                    'image' => $products[0]->getImage(),
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'id' => $productsInDatabase[1]->id,
-                    'name' => $products[1]->getName(),
-                    'available' => $products[1]->getAvailable(),
-                    'price' => $products[1]->getPrice()->getCents(),
-                    'vat_rate' => $products[1]->getVatRate(),
-                    'image' => $products[1]->getImage(),
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'id' => $productsInDatabase[2]->id,
-                    'name' => $products[2]->getName(),
-                    'available' => $products[2]->getAvailable(),
-                    'price' => $products[2]->getPrice()->getCents(),
-                    'vat_rate' => $products[2]->getVatRate(),
-                    'image' => $products[2]->getImage(),
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
-                ],
+                    [
+                        'id' => $productsInDatabase[0]->id,
+                        'name' => $products[0]->getName(),
+                        'available' => $products[0]->getAvailable(),
+                        'price' => $products[0]->getPrice()->getCents(),
+                        'vat_rate' => $products[0]->getVatRate(),
+                        'image' => $products[0]->getImage(),
+                    ],
+                    [
+                        'id' => $productsInDatabase[1]->id,
+                        'name' => $products[1]->getName(),
+                        'available' => $products[1]->getAvailable(),
+                        'price' => $products[1]->getPrice()->getCents(),
+                        'vat_rate' => $products[1]->getVatRate(),
+                        'image' => $products[1]->getImage(),
+                    ],
+                    [
+                        'id' => $productsInDatabase[2]->id,
+                        'name' => $products[2]->getName(),
+                        'available' => $products[2]->getAvailable(),
+                        'price' => $products[2]->getPrice()->getCents(),
+                        'vat_rate' => $products[2]->getVatRate(),
+                        'image' => $products[2]->getImage(),
+                    ],
+                ]
             ]
         );
     }
@@ -113,7 +109,7 @@ class ProductControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertExactJson(
-            [
+            [ 'data' =>
                 [
                     'id' => $productInDatabase[0]->id,
                     'name' => $product->getName(),
@@ -121,8 +117,6 @@ class ProductControllerTest extends TestCase
                     'price' => $product->getPrice()->getCents(),
                     'vat_rate' => $product->getVatRate(),
                     'image' => $product->getImage(),
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ],
             ]
         );
@@ -141,22 +135,21 @@ class ProductControllerTest extends TestCase
         $responseContent = json_decode($response->getContent());
 
         $response->assertStatus(201);
-        $response->assertExactJson([
+        $response->assertExactJson(
+            [ 'data' =>
                 [
-                    'id' => $responseContent[0]->id,
+                    'id' => $responseContent->data->id,
                     'name' => 'iphone',
                     'available' => 2,
                     'price' => 100, // price changes from 1 to 100, because it gets converted to cents
                     'vat_rate' => 0.2,
                     'image' => 'imagineLinkHere',
-                    'created_at' => now()->format('Y-m-d H:i:s'),
-                    'updated_at' => now()->format('Y-m-d H:i:s'),
                 ]
             ]);
 
         $this->assertDatabaseHas('products',
             [
-                'id' => $responseContent[0]->id,
+                'id' => $responseContent->data->id,
                 'name' => 'iphone',
                 'available' => 2,
                 'price' => 100,
@@ -200,21 +193,20 @@ class ProductControllerTest extends TestCase
         $responseContent = json_decode($response->getContent());
 
         $response->assertStatus(200);
-        $response->assertJson([
-            [
-                'name' => 'camera',
-                'available' => 100,
-                'price' => 100, // price changes from 1 to 100, because it gets converted to cents
-                'vat_rate' => 0.9,
-                'image' => 'imagineLinkHere',
-                'created_at' => now()->format('Y-m-d H:i:s'),
-                'updated_at' => now()->format('Y-m-d H:i:s'),
-
-            ]
+        $response->assertExactJson(
+            [ 'data' =>
+                [
+                    'id' => $responseContent->data->id,
+                    'name' => 'camera',
+                    'available' => 100,
+                    'price' => 100, // price changes from 1 to 100, because it gets converted to cents
+                    'vat_rate' => 0.9,
+                    'image' => 'imagineLinkHere',
+                ]
         ]);
 
         $this->assertDatabaseHas('products', [
-            'id' => $responseContent[0]->id,
+            'id' => $responseContent->data->id,
             'name' => 'camera',
             'available' => 100,
             'price' => 100, // price changes from 1 to 100, because it gets converted to cents

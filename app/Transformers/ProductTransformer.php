@@ -2,22 +2,20 @@
 
 namespace App\Transformers;
 
+use App\Models\Product;
 use League\Fractal\TransformerAbstract;
 
 class ProductTransformer extends TransformerAbstract
 {
-    protected array $defaultIncludes = [
-        //
-    ];
-
-    protected array $availableIncludes = [
-        //
-    ];
-
-    public function transform()
+    public function transform(Product $product): array
     {
         return [
-            //
+            'id' => $product->getId(),
+            'name' => $product->getName(),
+            'available' => $product->getAvailable(),
+            'price' => $product->getPrice()->getCents(),
+            'vat_rate' => $product->getVatRate(),
+            'image' => $product->getImage(),
         ];
     }
 }
