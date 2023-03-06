@@ -20,4 +20,4 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 6. You can run the development website by changing into the vue directory <code>$ cd ./vue </code> and running <code>$ npm run dev</code>
 
 ## Demo
-
+![](https://github.com/ricardsupenieks/Arkbauer/blob/main/demo.gif)
