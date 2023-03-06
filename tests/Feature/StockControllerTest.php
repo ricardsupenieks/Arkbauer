@@ -106,11 +106,14 @@ class StockControllerTest extends TestCase
             'updated_at' => Carbon::now(),
         ]);
 
-        $productInDatabase = DB::select('select id from products where name = ?', [$product->getName()]);
+        $productInDatabase = DB::select('select * from products where name = ?', [$product->getName()]);
+        $productId = $productInDatabase[0]->id;
 
         $response = $this->post('/api/v1/stock', [
-            'productId' => $productInDatabase[0]->id,
+            'productId' => $productId,
         ]);
+
+        $productStock = DB::select('select * from stock where product_id = ?', [$productId]);
 
         $responseContent = json_decode($response->getContent());
 
@@ -128,7 +131,7 @@ class StockControllerTest extends TestCase
 
         $this->assertDatabaseHas('stock',
             [
-                'id' => $responseContent->data->id,
+                'id' => $productStock[0]->id,
                 'product_id' => $productInDatabase[0]->id,
                 'created_at' => now()->format('Y-m-d H:i:s'),
                 'updated_at' => now()->format('Y-m-d H:i:s'),
