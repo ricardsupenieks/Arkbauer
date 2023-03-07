@@ -28,7 +28,8 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/products
-     #### Request Body: <br>
+    * Request Body: <br>
+    ####
         {
             "name": "",    
             "available": 0,
