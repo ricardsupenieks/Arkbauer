@@ -70,7 +70,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: GET
     * URL: http://127.0.0.1:8000/api/v1/products/id
-    
+##
 ### Stock
 * Add a product to the stock:
 
@@ -93,7 +93,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: DELETE
     * URL: http://127.0.0.1:8000/api/v1/products/id
-
+##
 ### Cart
 * Add a product to the cart:
 
