@@ -41,7 +41,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: GET
     * URL: http://127.0.0.1:8000/api/v1/products
-    * 
+    
 * Update a product:
 
     * HTTP Method: PUT
