@@ -49,7 +49,8 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: PUT
     * URL: http://127.0.0.1:8000/api/v1/products/id
-    #### Request Body: <br>
+    * Request Body: <br>
+    ####
         {
             "name": "",    
             "available": 0,
@@ -75,7 +76,8 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/stock
-    #### Request Body: <br>
+    * Request Body: <br>
+    ####
         {
             "productId": "",    
         }
@@ -97,7 +99,8 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/cart
-    #### Request Body: <br>
+    * Request Body: <br>
+    ####
         {
             "productId": "",    
         }
