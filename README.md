@@ -29,7 +29,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/products
     * Request Body: <br>
-    <code>{
+  <code>{
             &nbsp;&nbsp;&nbsp;&nbsp; "name": "",    
             &nbsp;&nbsp;&nbsp;&nbsp; "available": 0,
             &nbsp;&nbsp;&nbsp;&nbsp; "price": 0,    
@@ -47,7 +47,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * HTTP Method: PUT
     * URL: http://127.0.0.1:8000/api/v1/products/id
     * Request Body: <br>
-    <code>{
+  <code>{
             &nbsp;&nbsp;&nbsp;&nbsp; "name": "",
             &nbsp;&nbsp;&nbsp;&nbsp; "available": 0,
             &nbsp;&nbsp;&nbsp;&nbsp; "price": 0,
@@ -65,6 +65,46 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * HTTP Method: GET
     * URL: http://127.0.0.1:8000/api/v1/products/id
     
+### Stock
+* Add a product to the stock:
+
+    * HTTP Method: POST
+    * URL: http://127.0.0.1:8000/api/v1/stock
+    * Request Body: <br>
+  <code>{
+            &nbsp;&nbsp;&nbsp;&nbsp; "productId": "",    
+        }</code>
+        
+* Show all products in stock:
+
+    * HTTP Method: GET
+    * URL: http://127.0.0.1:8000/api/v1/stock
+
+* Remove a product from stock:
+
+    * HTTP Method: DELETE
+    * URL: http://127.0.0.1:8000/api/v1/products/id
+
+### Cart
+* Add a product to the cart:
+
+    * HTTP Method: POST
+    * URL: http://127.0.0.1:8000/api/v1/cart
+    * Request Body: <br>
+  <code>{
+            &nbsp;&nbsp;&nbsp;&nbsp; "productId": "",    
+        }</code>
+      
+* Show all products in the cart:
+
+    * HTTP Method: GET
+    * URL: http://127.0.0.1:8000/api/v1/cart
+
+* Remove a product from the cart:
+
+    * HTTP Method: GET
+    * URL: http://127.0.0.1:8000/api/v1/cart
+
 Note: Replace "id" in the URLs with the actual ID of the product.
 
 ## Demo
