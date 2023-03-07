@@ -29,13 +29,13 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/products
     * Request Body: <br>
-        { <br>
-            "name": "", <br>
-            "available": 0, <br>
-            "price": 0, <br>
-            "vatRate": 0, <br>
-            "imageUrl": "", <br>
-        }
+        { <code>
+            "name": "",
+            "available": 0,
+            "price": 0,
+            "vatRate": 0,
+            "imageUrl": "", 
+        } </code>
     
 * Show all products:
 
@@ -47,13 +47,13 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * HTTP Method: PUT
     * URL: http://127.0.0.1:8000/api/v1/products/id
     * Request Body: <br>
-        { <br>
-            "name": "", <br>
-            "available": 0, <br>
-            "price": 0, <br>
-            "vatRate": 0, <br>
-            "imageUrl": "", <br>
-        }
+        { <code>
+            "name": "",
+            "available": 0,
+            "price": 0,
+            "vatRate": 0,
+            "imageUrl": "",
+        } </code>
         
 * Delete a product:
 
