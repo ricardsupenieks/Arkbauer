@@ -30,11 +30,11 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * URL: http://127.0.0.1:8000/api/v1/products
      #### Request Body: <br>
         {
-            &nbsp;&nbsp;&nbsp;&nbsp; "name": "",    
-            &nbsp;&nbsp;&nbsp;&nbsp; "available": 0,
-            &nbsp;&nbsp;&nbsp;&nbsp; "price": 0,    
-            &nbsp;&nbsp;&nbsp;&nbsp; "vatRate": 0, 
-            &nbsp;&nbsp;&nbsp;&nbsp; "imageUrl": "", 
+            "name": "",    
+            "available": 0,
+            "price": 0,    
+            "vatRate": 0, 
+            "imageUrl": "", 
         }
     
     
@@ -48,14 +48,14 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: PUT
     * URL: http://127.0.0.1:8000/api/v1/products/id
-    * Request Body: <br>
-  <code>{
-            &nbsp;&nbsp;&nbsp;&nbsp; "name": "",
-            &nbsp;&nbsp;&nbsp;&nbsp; "available": 0,
-            &nbsp;&nbsp;&nbsp;&nbsp; "price": 0,
-            &nbsp;&nbsp;&nbsp;&nbsp; "vatRate": 0,
-            &nbsp;&nbsp;&nbsp;&nbsp; "imageUrl": "", 
-        }</code>
+    #### Request Body: <br>
+        {
+            "name": "",    
+            "available": 0,
+            "price": 0,    
+            "vatRate": 0, 
+            "imageUrl": "", 
+        }
         
         
 * Delete a product:
@@ -74,10 +74,10 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/stock
-    * Request Body: <br>
-  <code>{
-            &nbsp;&nbsp;&nbsp;&nbsp; "productId": "",    
-        }</code>
+    #### Request Body: <br>
+        {
+            "productId": "",    
+        }
         
         
 * Show all products in stock:
@@ -96,10 +96,10 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 
     * HTTP Method: POST
     * URL: http://127.0.0.1:8000/api/v1/cart
-    * Request Body: <br>
-  <code>{
-            &nbsp;&nbsp;&nbsp;&nbsp; "productId": "",    
-        }</code>
+    #### Request Body: <br>
+        {
+            "productId": "",    
+        }
       
       
 * Show all products in the cart:
