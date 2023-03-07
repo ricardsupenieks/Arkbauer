@@ -1,5 +1,7 @@
 ## Description
-This is an e-commerce store program that uses Laravel in conjuction with VueJS. Using API calls, you can create products and add them to the stores stock, which the user can add to their cart by clicking the cart icon. The user can see their cart by clicking the shopping bag in the top right corner. They can also see the subtotal, vat amount, and total price. 
+This is an e-commerce store program that uses Laravel in conjuction with VueJS. Using API calls, you can create products and add them to the stores stock, which the user can add to their cart by clicking the cart icon. The user can see their cart by clicking the shopping bag in the top right corner. They can also see the subtotal, vat amount, and total price.
+
+This project was made without using eloquent.
 
 The user can add to their cart only a single product unit.
 
