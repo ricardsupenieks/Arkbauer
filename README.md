@@ -26,9 +26,9 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 ### Products
 #### Create a product:
 
-    - **HTTP Method:** POST
-    - **URL:** http://127.0.0.1:8000/api/v1/products
-    - **Request Body:** <br>
+    * HTTP Method: POST
+    * URL: http://127.0.0.1:8000/api/v1/products
+    * Request Body: <br>
   <code>{
             &nbsp;&nbsp;&nbsp;&nbsp; "name": "",    
             &nbsp;&nbsp;&nbsp;&nbsp; "available": 0,
