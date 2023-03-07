@@ -18,7 +18,9 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 5. Run <code>$ php artisan migrate </code>
 6. Run <code>$ php artisan key:generate </code>
 7. You can run the API with <code>$ php artisan serve </code>
-8. You can run the development website by changing into the vue directory <code>$ cd ./vue </code> and running <code>$ npm run dev</code>
+8. Change into the vue directory <code>$ cd ./vue </code>
+9. Run <code>$ npm install </code>
+10. You can run the developement server with <code>$ npm run dev </code>
 
 ## Demo
 ![](https://github.com/ricardsupenieks/Arkbauer/blob/main/demo.gif)
