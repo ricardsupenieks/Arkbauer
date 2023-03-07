@@ -15,14 +15,14 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 ## Installation
 1. Clone this repository
 
-### Backend
+#### Backend
 1. Run <code>$ composer install</code>
 2. Rename ".env.example" to ".env" and enter the correct database information
 3. Run <code>$ php artisan migrate </code>
 4. Run <code>$ php artisan key:generate </code>
 5. You can run the API with <code>$ php artisan serve </code>
 
-### Frontend
+#### Frontend
 1. Change into the vue directory <code>$ cd ./vue </code>
 2. Run <code>$ npm install </code>
 3. You can run the developement server with <code>$ npm run dev </code>
