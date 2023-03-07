@@ -23,7 +23,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
 10. You can run the developement server with <code>$ npm run dev </code>
 
 ## API
-# Products
+### Products
 * Create a product:
 
     * HTTP Method: POST
