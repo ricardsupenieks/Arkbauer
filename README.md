@@ -37,10 +37,12 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
             &nbsp;&nbsp;&nbsp;&nbsp; "imageUrl": "", 
         }</code>
     
+    
 * Show all products:
 
     * HTTP Method: GET
     * URL: http://127.0.0.1:8000/api/v1/products
+    
     
 * Update a product:
 
@@ -55,10 +57,12 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
             &nbsp;&nbsp;&nbsp;&nbsp; "imageUrl": "", 
         }</code>
         
+        
 * Delete a product:
 
     * HTTP Method: DELETE
     * URL: http://127.0.0.1:8000/api/v1/products/id
+    
     
 * Show a product:
 
@@ -75,10 +79,12 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
             &nbsp;&nbsp;&nbsp;&nbsp; "productId": "",    
         }</code>
         
+        
 * Show all products in stock:
 
     * HTTP Method: GET
     * URL: http://127.0.0.1:8000/api/v1/stock
+
 
 * Remove a product from stock:
 
@@ -95,10 +101,12 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
             &nbsp;&nbsp;&nbsp;&nbsp; "productId": "",    
         }</code>
       
+      
 * Show all products in the cart:
 
     * HTTP Method: GET
     * URL: http://127.0.0.1:8000/api/v1/cart
+
 
 * Remove a product from the cart:
 
