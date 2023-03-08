@@ -127,7 +127,7 @@ class ProductControllerTest extends TestCase
         $response = $this->post('/api/v1/products', [
             'name' => 'iphone',
             'available' => 2,
-            'price' => 1,
+            'price' => 1.22,
             'vatRate' => 0.2,
             'imageUrl' => 'imagineLinkHere',
         ]);
@@ -141,7 +141,7 @@ class ProductControllerTest extends TestCase
                     'id' => $responseContent->data->id,
                     'name' => 'iphone',
                     'available' => 2,
-                    'price' => 100, // price changes from 1 to 100, because it gets converted to cents
+                    'price' => 122, // price changes from 1 to 100, because it gets converted to cents
                     'vat_rate' => 0.2,
                     'image' => 'imagineLinkHere',
                 ]
@@ -152,7 +152,7 @@ class ProductControllerTest extends TestCase
                 'id' => $responseContent->data->id,
                 'name' => 'iphone',
                 'available' => 2,
-                'price' => 100,
+                'price' => 122,
                 'vat_rate' => 0.2,
                 'image' => 'imagineLinkHere',
                 'created_at' => now()->format('Y-m-d H:i:s'),
