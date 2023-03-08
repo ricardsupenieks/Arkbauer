@@ -61,7 +61,7 @@ class ProductController extends Controller
 
     private function createProduct(Request $request): Product
     {
-        $price = (new Money())->setEuros($request->get('price'));
+        $price = (new Money())->setCents($request->get('price') * 100);
 
         $product = new Product();
         $product->setName($request->get('name'));
