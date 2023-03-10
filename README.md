@@ -40,7 +40,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
             "available": 0,
             "price": 0,    
             "vatRate": 0, 
-            "imageUrl": "", 
+            "imageUrl": "" 
         }
     
     
@@ -61,7 +61,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
             "available": 0,
             "price": 0,    
             "vatRate": 0, 
-            "imageUrl": "", 
+            "imageUrl": ""
         }
         
         
@@ -84,7 +84,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * Request Body: <br>
     ####
         {
-            "productId": "",    
+            "productId": ""    
         }
         
         
@@ -107,7 +107,7 @@ I used <a href="https://www.postman.com/">Postman</a> for the API calls.
     * Request Body: <br>
     ####
         {
-            "productId": "",    
+            "productId": ""    
         }
       
       
